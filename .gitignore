@@ -1,0 +1,9 @@
+# Do not add personal photographs or exported data to the code repository.
+*.json
+*.jpg
+*.jpeg
+*.webp
+*.heic
+*.heif
+*.zip
+!manifest.webmanifest
