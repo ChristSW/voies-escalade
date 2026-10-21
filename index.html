@@ -16,6 +16,9 @@
 <style>
 .mark-toolbar{padding:18px;background:var(--white);border:1px solid var(--line);border-radius:16px;margin:18px 0}.mark-toolbar .row{gap:8px}.mark-toolbar button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:white}.mark-toolbar .type-choice{margin-top:12px}.mark-toolbar .type-choice button[aria-pressed=true]{background:#e4efcc;color:var(--ink);border:2px solid var(--ink)}.mark-help{font-size:14px;min-height:44px;margin-bottom:0}.hold-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden}.hold-marker{position:absolute;width:48px;height:48px;min-height:48px;padding:0;border:0;background:transparent;transform:translate(-50%,-50%);display:grid;place-items:center;pointer-events:auto;touch-action:none;border-radius:50%}.hold-marker:hover{filter:none}.hold-symbol{width:28px;height:28px;display:grid;place-items:center;background:transparent;color:transparent;border:3px solid #ffd44f;border-radius:50%;box-shadow:0 0 0 1px #142a2470}.hold-marker.foot .hold-symbol{border-color:#52e1f2}.hold-marker.selected .hold-symbol{outline:3px solid #fff;outline-offset:4px;box-shadow:0 0 0 8px #142a24}.hold-marker:focus-visible{outline:3px solid white;outline-offset:2px}.hold-panel{padding:16px;background:var(--white);border:1px solid var(--line);border-radius:14px;margin-top:16px}.hold-panel .row{margin-top:12px}.hold-panel p{margin:6px 0}.hold-summary{font-size:14px;margin:12px 0}.legend-mark{display:inline-block;width:20px;height:20px;border:3px solid #b88100;border-radius:50%;background:transparent;vertical-align:middle;margin-right:6px}.legend-mark.foot{border-color:#00889b}.mark-toolbar .save-state{font-size:12px;margin:12px 0 0;color:var(--muted)}.hold-nudge{display:flex;gap:6px;flex-wrap:wrap}.hold-nudge button{min-width:48px}.viewer[data-mode=add]{cursor:crosshair}.viewer[data-mode=move]{cursor:grab}.viewer[data-mode=explore]{cursor:grab}@media(max-width:600px){.mark-toolbar{padding:14px}.mark-toolbar>.row>button{flex:1;padding:9px 10px;font-size:14px}.mark-toolbar .type-choice button{flex:1}.hold-panel>.row>button{flex:1}}
 </style>
+<style>
+.route-choice{display:flex;align-items:center;gap:12px;margin:0 0 10px;font-size:16px;cursor:pointer;min-height:48px}.route-choice input{width:24px;height:24px;accent-color:var(--ink);flex:none}.route-card.active{border:2px solid var(--ink);background:#f2f6e9}.route-card .row button{font-size:14px;padding:8px 12px}.route-editor .row{margin-top:20px}.route-tools button[aria-pressed=true]{background:#e4efcc;border:2px solid var(--ink)}.route-tools #route-edit-info{margin-top:10px;min-height:40px;background:transparent}.route-tools #endpoint-types{margin-top:8px}.route-tools #endpoint-types button{min-height:40px;padding:5px 12px;font-size:13px}.route-tools #paint-title{margin-bottom:8px}.route-preview-actions-item{padding:8px 0;border-bottom:1px solid var(--line);width:100%;overflow-wrap:anywhere}.route-preview-actions-item button{margin-top:6px}.multi-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:3px solid;border-radius:50%;background:transparent;box-shadow:0 0 0 1px #142a2460;pointer-events:none}.hold-marker.selected .multi-ring:last-child{outline:2px solid white;outline-offset:4px}.route-actions{margin-top:24px}.routes-section{margin-bottom:24px}.route-tools .row{gap:5px}.route-tools .row button{font-size:13px;padding:8px 10px}.route-tools #paint-help{margin:8px 0}.route-tools .route-tool-buttons{grid-template-columns:repeat(4,minmax(0,1fr))}.route-tools .route-tool-buttons button{padding:8px 3px;font-size:13px}.route-tools .legend-mark{width:16px;height:16px;margin-right:3px}.circle-note{font-size:13px;color:var(--muted);margin:8px 0}.hold-marker{z-index:1}@media(max-width:600px){.route-tools{padding:10px}.route-tools .row>button{flex:1}.route-preview h2{font-size:22px}}
+</style>
 </head>
 <body>
 <header><div class="header-inner"><div class="brand"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect width="48" height="48" rx="13" fill="#183f35"/><path d="m8 35 12-22 7 12 5-8 9 18" stroke="#d5ee87" stroke-width="3" stroke-linejoin="round"/><circle cx="33" cy="11" r="3" fill="#d5ee87"/></svg><div>VOIES<small>CARNET D’ESCALADE</small></div></div><div class="nav"><span id="network" class="tag"><i class="dot"></i><span>En ligne</span></span><button id="settings-open" type="button">Réglages</button></div></div></header>
@@ -28,33 +31,35 @@
 <div class="section-line"><strong>Mes murs <span class="pill" id="wall-count">0 / 5</span></strong><button id="undo" hidden>Annuler la dernière action</button></div>
 <div id="walls" class="grid"></div>
 <div class="empty" id="empty"><div><svg viewBox="0 0 80 80" fill="none" aria-hidden="true"><path d="M13 66 29 15l17 11L62 9l8 57H13Z" fill="#dce8c3" stroke="#183f35" stroke-width="2"/><path d="m30 25 8 5-7 7-6-4Zm22 12 8-4 3 8-10 3ZM27 52l7-6 6 7-7 7Z" fill="#183f35"/></svg><h2>Votre premier mur vous attend</h2><p class="muted">Une photo de la salle, un nom, et votre carnet commence.</p><button id="add-first" class="primary">Ajouter mon premier mur</button></div></div>
-<p class="footnote">Sur cet appareil uniquement · Jusqu’à 5 murs · Étape 3 : création des voies</p>
+<p class="footnote">Sur cet appareil uniquement · Jusqu’à 5 murs · Vos murs et vos voies</p>
 </section>
 <section id="detail" hidden>
 <button id="back">← Mes murs</button>
 <div class="detail-heading"><div class="eyebrow">Mon mur</div><h1 id="wall-title"></h1><div class="row between"><span id="photo-info" class="muted small"></span><div class="row"><button id="rename">Renommer</button><button id="delete" class="danger">Supprimer</button></div></div></div>
-<div class="row route-actions"><button id="create-route" class="primary">＋ Créer une voie</button><button id="all-holds" hidden>Voir toutes les prises</button></div>
-<div id="route-preview" class="route-preview" hidden><h2 id="route-preview-title"></h2><p id="route-preview-meta" class="small"></p><p id="route-preview-comment"></p><button id="edit-viewed-route">Modifier cette voie</button></div>
-<section id="route-editor" class="route-editor" aria-label="Création et modification d’une voie" hidden><details open><summary>Informations de la voie</summary><div class="route-fields"><div class="wide"><label for="route-name">Nom de la voie</label><input type="text" id="route-name" maxlength="80" required></div><div><label for="route-grade">Cotation (facultative)</label><input type="text" id="route-grade" maxlength="30" placeholder="Ex. 6a"></div><div><label for="route-author">Auteur</label><input type="text" id="route-author" maxlength="60" required></div><div class="wide"><label for="route-comment">Commentaire (facultatif)</label><textarea id="route-comment" maxlength="2000"></textarea></div></div></details></section>
-<div id="route-tools" class="route-tools" hidden><div class="route-tool-buttons" role="group" aria-label="Rôle à attribuer aux prises"><button id="route-tool-normal" aria-pressed="true">Sélectionner</button><button id="route-tool-start" aria-pressed="false"><span class="legend-mark start" aria-hidden="true"></span>Départ</button><button id="route-tool-finish" aria-pressed="false"><span class="legend-mark finish" aria-hidden="true"></span>Arrivée</button><button id="route-tool-remove" aria-pressed="false">Retirer</button></div><p id="route-selection-count" role="status"></p><p class="muted">Choisissez un rôle puis touchez les prises. Retoucher une prise avec le même rôle la retire. Pincez pour zoomer.</p><div class="row"><button id="route-save" class="primary">Enregistrer la voie</button><button id="route-cancel">Annuler</button><button id="route-undo-choice" hidden>Annuler le dernier choix</button></div><p id="route-error" class="error" role="alert"></p></div>
+<div class="row route-actions"><button id="create-route" class="primary">＋ Créer une voie</button><button id="all-holds" hidden>Masquer les voies</button><button id="show-selection" hidden>Voir la sélection sur la photo ↓</button></div>
+<section id="routes-section" class="routes-section" aria-labelledby="routes-title"><h2 id="routes-title">Mes voies <span id="route-count" class="pill">0</span></h2><p id="routes-empty" class="muted">Commencez par créer une voie, puis posez ses cercles sur la photo.</p><p class="small muted" id="multi-hint" hidden>Cochez une ou plusieurs voies pour afficher leurs prises ensemble.</p><div id="route-list" class="route-list"></div></section>
+<section id="route-editor" class="route-editor" aria-label="Informations de la voie" hidden><div class="eyebrow">1 · Informations de la voie</div><h2 id="route-editor-title">Créer une voie</h2><div class="route-fields"><div class="wide"><label for="route-name">Nom de la voie</label><input type="text" id="route-name" maxlength="80" required></div><div><label for="route-grade">Cotation (facultative)</label><input type="text" id="route-grade" maxlength="30" placeholder="Ex. 6a"></div><div><label for="route-author">Auteur</label><input type="text" id="route-author" maxlength="60" required></div><div class="wide"><label for="route-comment">Commentaire (facultatif)</label><textarea id="route-comment" maxlength="2000"></textarea></div></div><p id="route-info-error" class="error" role="alert"></p><div class="row"><button id="route-next" class="primary">Continuer : placer les prises</button><button id="route-cancel-info">Annuler</button></div></section>
+<div id="route-preview" class="route-preview" hidden><h2 id="route-preview-title"></h2><p id="route-preview-meta" class="small"></p><p id="route-preview-comment"></p><div id="route-preview-actions" class="row"></div><p id="concentric-help" class="small muted" hidden>Prises communes : les cercles se lisent du centre vers l’extérieur dans l’ordre des voies ci-dessus.</p></div>
+<div id="route-tools" class="route-tools" hidden><div class="eyebrow" id="paint-title">2 · Cercles de la voie</div><div class="route-tool-buttons" role="group" aria-label="Cercle à poser"><button id="paint-start" aria-pressed="true"><span class="legend-mark start" aria-hidden="true"></span>Départ</button><button id="paint-finish" aria-pressed="false"><span class="legend-mark finish" aria-hidden="true"></span>Arrivée</button><button id="paint-hand" aria-pressed="false"><span class="legend-mark" aria-hidden="true"></span>Main</button><button id="paint-foot" aria-pressed="false"><span class="legend-mark foot" aria-hidden="true"></span>Pied</button></div><div id="endpoint-types" class="row small" role="group" aria-label="Type des nouvelles prises de départ ou d’arrivée"><span>Nouvelle prise :</span><button id="endpoint-hand" aria-pressed="true">Main</button><button id="endpoint-foot" aria-pressed="false">Pied</button></div><div class="row" role="group" aria-label="Action sur les cercles"><button id="op-paint" aria-pressed="true">Poser</button><button id="op-move" aria-pressed="false">Déplacer</button><button id="op-remove" aria-pressed="false">Retirer</button><button id="op-explore" aria-pressed="false">Explorer</button></div><p id="paint-help" class="muted"></p><p id="route-selection-count" role="status"></p></div>
 <div id="mark-toolbar" class="mark-toolbar" aria-label="Marquage des prises"><div class="row" role="group" aria-label="Mode de manipulation"><button id="mode-explore" aria-pressed="true">Explorer</button><button id="mode-add" aria-pressed="false">＋ Ajouter</button><button id="mode-move" aria-pressed="false">Déplacer</button></div><div class="row type-choice" id="type-choice" role="group" aria-label="Type de la nouvelle prise" hidden><button id="type-hand" aria-pressed="true"><span class="legend-mark" aria-hidden="true"></span> Main</button><button id="type-foot" aria-pressed="false"><span class="legend-mark foot" aria-hidden="true"></span> Pied</button></div><p class="mark-help" id="mark-help">Pincez pour zoomer, glissez pour explorer. Touchez une prise pour la sélectionner.</p><p class="save-state" id="save-state" role="status">Chaque modification est enregistrée sur cet appareil.</p></div>
-<div class="row between hold-summary"><span id="hold-count">0 prise</span><button id="undo-detail" hidden>Annuler la dernière action</button></div>
+<div id="hold-summary" class="row between hold-summary"><span id="hold-count">0 prise</span><button id="undo-detail" hidden>Annuler la dernière action</button></div>
 <div class="viewer" id="viewer" data-mode="explore" aria-label="Photo du mur : pincer pour zoomer et glisser pour déplacer"><img id="wall-photo" alt="" draggable="false"><div id="hold-layer" class="hold-layer" role="group" aria-label="Prises du mur"></div></div>
-<div class="tools"><button id="zoom-out" aria-label="Réduire la photo">−</button><button id="zoom-reset">Vue entière</button><button id="zoom-in" aria-label="Agrandir la photo">＋</button></div>
-<p class="small muted" style="text-align:center"><span class="legend-mark" aria-hidden="true"></span> Main &nbsp; <span class="legend-mark foot" aria-hidden="true"></span> Pied &nbsp; <span class="legend-mark start" aria-hidden="true"></span> Départ &nbsp; <span class="legend-mark finish" aria-hidden="true"></span> Arrivée · Pincez pour zoomer dans tous les modes.</p>
-<div class="hold-panel" id="hold-panel" hidden><strong id="hold-label"></strong><p class="small muted">Type fixe. Pour le corriger, supprimez cette prise puis recréez-la.</p><div class="row"><button id="move-selected">Déplacer cette prise</button><button id="delete-hold" class="danger">Supprimer la prise</button><button id="deselect-hold">Désélectionner</button></div><div id="nudge-panel" hidden><p class="small muted">Ajustement précis : chaque flèche déplace la prise de 0,5 % de la photo.</p><div class="hold-nudge" role="group" aria-label="Ajuster la position"><button id="nudge-left" aria-label="Déplacer la prise vers la gauche">←</button><button id="nudge-up" aria-label="Déplacer la prise vers le haut">↑</button><button id="nudge-down" aria-label="Déplacer la prise vers le bas">↓</button><button id="nudge-right" aria-label="Déplacer la prise vers la droite">→</button></div></div></div>
-<section id="routes-section" class="routes-section" aria-labelledby="routes-title"><div class="route-title"><h2 id="routes-title">Mes voies <span id="route-count" class="pill">0</span></h2></div><p id="routes-empty" class="muted">Votre première voie commence avec les prises du mur.</p><div id="route-list" class="route-list"></div></section>
+<div id="zoom-tools" class="tools"><button id="zoom-out" aria-label="Réduire la photo">−</button><button id="zoom-reset">Vue entière</button><button id="zoom-in" aria-label="Agrandir la photo">＋</button></div>
+<p id="photo-legend" class="small muted" style="text-align:center"><span class="legend-mark" aria-hidden="true"></span> Main &nbsp; <span class="legend-mark foot" aria-hidden="true"></span> Pied &nbsp; <span class="legend-mark start" aria-hidden="true"></span> Départ &nbsp; <span class="legend-mark finish" aria-hidden="true"></span> Arrivée · Pincez pour zoomer dans tous les modes.</p>
+<div id="route-save-controls" class="hold-panel" hidden><div class="row"><button id="route-save" class="primary">Enregistrer la voie</button><button id="route-cancel">Annuler</button><button id="route-undo-choice" hidden>Annuler le dernier geste</button></div><button id="route-edit-info" class="small">Modifier les informations</button><p id="route-error" class="error" role="alert"></p></div>
+<div id="circle-details" class="hold-panel" hidden><strong id="circle-details-title"></strong><div id="circle-details-actions" class="row"></div></div><div hidden><div class="hold-panel" id="hold-panel" hidden><strong id="hold-label"></strong><p class="small muted">Type fixe. Pour le corriger, supprimez cette prise puis recréez-la.</p><div class="row"><button id="move-selected">Déplacer cette prise</button><button id="delete-hold" class="danger">Supprimer la prise</button><button id="deselect-hold">Désélectionner</button></div><div id="nudge-panel" hidden><p class="small muted">Ajustement précis : chaque flèche déplace la prise de 0,5 % de la photo.</p><div class="hold-nudge" role="group" aria-label="Ajuster la position"><button id="nudge-left" aria-label="Déplacer la prise vers la gauche">←</button><button id="nudge-up" aria-label="Déplacer la prise vers le haut">↑</button><button id="nudge-down" aria-label="Déplacer la prise vers le bas">↓</button><button id="nudge-right" aria-label="Déplacer la prise vers la droite">→</button></div></div></div></div>
+
 </section>
 </main>
 <dialog id="author-dialog" aria-labelledby="author-title"><form id="author-form"><h2 id="author-title">Bienvenue dans votre carnet</h2><p class="muted">Quel prénom ou pseudo voulez-vous utiliser pour signer vos futures voies ?</p><label for="author-first">Votre prénom ou pseudo</label><input id="author-first" type="text" maxlength="60" required autocomplete="nickname"><p class="small muted">Ce nom reste sur cet appareil. Vous pourrez le modifier dans les réglages.</p><p id="author-error" class="error" role="alert"></p><div class="dialog-actions"><button class="primary" type="submit">Commencer</button></div></form></dialog>
 <dialog id="wall-dialog" aria-labelledby="new-title"><form id="wall-form"><h2 id="new-title">Un nouveau mur</h2><label for="wall-name">Nom du mur</label><input id="wall-name" type="text" maxlength="80" placeholder="Ex. Le dévers de la salle" required><label>Photo du mur</label><div class="photo-choice"><button type="button" id="choose-gallery">▧ Choisir une photo</button><button type="button" id="choose-camera">◎ Prendre une photo</button></div><input id="gallery" type="file" accept="image/*" hidden><input id="camera" type="file" accept="image/*" capture="environment" hidden><img id="preview" class="photo-preview" alt="Aperçu de la photo choisie" hidden><p id="selected-info" class="small muted">La photo sera réduite à 1 600 pixels maximum et enregistrée sur cet appareil.</p><p id="wall-error" class="error" role="alert"></p><div class="dialog-actions"><button type="button" id="cancel-wall">Annuler</button><button type="submit" class="primary" id="save-wall">Créer le mur</button></div></form></dialog>
-<dialog id="settings-dialog" aria-labelledby="settings-title"><form id="settings-form"><h2 id="settings-title">Réglages</h2><label for="author-name">Votre prénom ou pseudo</label><input id="author-name" type="text" required maxlength="60" autocomplete="nickname"><div class="settings-block"><strong>Stockage sur cet appareil</strong><p id="storage-state" class="small"></p><p id="storage-size" class="small muted"></p><button type="button" id="persist">Demander la conservation des données</button><p class="small muted">Même avec cette protection, effacer les données du navigateur supprime votre carnet. Les sauvegardes par export arriveront à l’étape 5.</p></div><div class="settings-block"><strong>Voies · version 0.3.0</strong><p class="small muted">Murs, prises et voies avec départs et arrivées. Chaque téléphone possède ses propres données ; elles ne sont pas partagées automatiquement.</p></div><p id="settings-error" class="error" role="alert"></p><div class="dialog-actions"><button type="button" id="settings-close">Fermer</button><button class="primary" type="submit">Enregistrer</button></div></form></dialog>
+<dialog id="settings-dialog" aria-labelledby="settings-title"><form id="settings-form"><h2 id="settings-title">Réglages</h2><label for="author-name">Votre prénom ou pseudo</label><input id="author-name" type="text" required maxlength="60" autocomplete="nickname"><div class="settings-block"><strong>Stockage sur cet appareil</strong><p id="storage-state" class="small"></p><p id="storage-size" class="small muted"></p><button type="button" id="persist">Demander la conservation des données</button><p class="small muted">Même avec cette protection, effacer les données du navigateur supprime votre carnet. Les sauvegardes par export arriveront à l’étape 5.</p></div><div class="settings-block"><strong>Voies · version 0.4.0</strong><p class="small muted">Création directe des voies et affichage de plusieurs voies. Chaque téléphone possède ses propres données ; elles ne sont pas partagées automatiquement.</p></div><p id="settings-error" class="error" role="alert"></p><div class="dialog-actions"><button type="button" id="settings-close">Fermer</button><button class="primary" type="submit">Enregistrer</button></div></form></dialog>
 <dialog id="confirm-dialog" aria-labelledby="confirm-title"><h2 id="confirm-title"></h2><p id="confirm-text"></p><div class="dialog-actions"><button id="confirm-no">Annuler</button><button id="confirm-yes" class="primary">Confirmer</button></div></dialog>
 <dialog id="rename-dialog" aria-labelledby="rename-title"><form id="rename-form"><h2 id="rename-title">Renommer le mur</h2><label for="rename-name">Nom du mur</label><input type="text" id="rename-name" maxlength="80" required><p id="rename-error" class="error" role="alert"></p><div class="dialog-actions"><button type="button" id="rename-close">Annuler</button><button class="primary">Enregistrer</button></div></form></dialog>
 <div class="toast" id="toast" role="status" hidden></div>
 <script>
 'use strict';
-const $=id=>document.getElementById(id), VERSION='0.3.0', DB_NAME='voies-escalade';
+const $=id=>document.getElementById(id), VERSION='0.4.0', DB_NAME='voies-escalade';
 let db, walls=[], author='', selectedId=null, undoAction=null, urls=[], draft=null, previewURL=null, photoToken=0, toastTimer, busyPhoto=false, busyMutation=false;
 function message(text){$('toast').textContent=text;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,6000)}
 function humanError(e){if(e?.name==='QuotaExceededError')return 'Il manque de la place sur cet appareil. Libérez de l’espace puis réessayez. L’enregistrement n’a pas été effectué.';return e?.message||'L’opération a échoué. Réessayez.'}
@@ -67,8 +72,8 @@ function resetURLs(){urls.forEach(u=>URL.revokeObjectURL(u));urls=[]}
 function photoURL(blob){const url=URL.createObjectURL(blob);urls.push(url);return url}
 async function refresh(){walls=(await readAll('walls')).sort((a,b)=>b.createdAt-a.createdAt);render();renderHolds();renderRoutes()}
 function render(){resetURLs();$('wall-count').textContent=walls.length+' / 5';$('add-wall').disabled=walls.length>=5;$('empty').hidden=walls.length>0;$('undo').hidden=!undoAction;const list=$('walls');list.replaceChildren();for(const w of walls){const card=document.createElement('article');card.className='card';const button=document.createElement('button');button.type='button';button.setAttribute('aria-label','Ouvrir '+w.name);const img=document.createElement('img');img.src=photoURL(w.photo);img.alt='Photo du mur '+w.name;const content=document.createElement('div');content.className='card-content';const text=document.createElement('div');const title=document.createElement('h2');title.textContent=w.name;const meta=document.createElement('small');meta.textContent=w.width+' × '+w.height+' px · '+Math.max(1,Math.round(w.photo.size/1024))+' Ko';const arrow=document.createElement('span');arrow.className='arrow';arrow.textContent='↗';arrow.setAttribute('aria-hidden','true');text.append(title,meta);content.append(text,arrow);button.append(img,content);button.onclick=()=>showWall(w.id);card.append(button);list.append(card)}if(selectedId){const w=walls.find(w=>w.id===selectedId);if(w){$('wall-title').textContent=w.name;$('wall-photo').src=photoURL(w.photo);$('wall-photo').alt='Photo du mur '+w.name;$('photo-info').textContent=w.width+' × '+w.height+' px · '+Math.round(w.photo.size/1024)+' Ko'}else showHome()}}
-function showWall(id){routeDraft=null;routeViewId=null;routeChoiceHistory=[];selectedId=id;selectedHoldId=null;markMode='explore';$('home').hidden=true;$('detail').hidden=false;render();resetZoom();setMode('explore');renderRoutes();window.scrollTo(0,0)}
-function showHome(){routeDraft=null;routeViewId=null;routeChoiceHistory=[];selectedId=null;selectedHoldId=null;$('home').hidden=false;$('detail').hidden=true;resetZoom()}
+function showWall(id){routeDraft=null;routeViewId=null;routeViewIds.clear();routeChoiceHistory=[];selectedId=id;selectedHoldId=null;markMode='explore';$('home').hidden=true;$('detail').hidden=false;render();resetZoom();setMode('explore');renderRoutes();window.scrollTo(0,0)}
+function showHome(){routeDraft=null;routeViewId=null;routeViewIds.clear();routeChoiceHistory=[];selectedId=null;selectedHoldId=null;$('home').hidden=false;$('detail').hidden=true;resetZoom()}
 function cleanDraft(){photoToken++;draft=null;if(previewURL)URL.revokeObjectURL(previewURL);previewURL=null;$('preview').removeAttribute('src');$('preview').hidden=true;$('gallery').value='';$('camera').value='';busyPhoto=false;$('save-wall').disabled=false}
 function addDialog(){if(!db)return;if(walls.length>=5){message('Le carnet contient déjà 5 murs.');return}cleanDraft();$('wall-form').reset();$('wall-error').textContent='';$('selected-info').textContent='La photo sera réduite à 1 600 pixels maximum et enregistrée sur cet appareil.';$('wall-dialog').showModal()}
 async function reducePhoto(file){if(!file||!file.type.startsWith('image/'))throw new Error('Choisissez une image JPEG, PNG ou WebP.');let source;try{source=await createImageBitmap(file,{imageOrientation:'from-image'})}catch{throw new Error('Cette image ne peut pas être lue. Essayez une photo JPEG, PNG ou WebP.')}try{const factor=Math.min(1,1600/Math.max(source.width,source.height));const canvas=document.createElement('canvas');canvas.width=Math.max(1,Math.round(source.width*factor));canvas.height=Math.max(1,Math.round(source.height*factor));const ctx=canvas.getContext('2d');if(!ctx)throw new Error('Impossible de préparer la photo sur cet appareil.');ctx.fillStyle='#ffffff';ctx.fillRect(0,0,canvas.width,canvas.height);ctx.drawImage(source,0,0,canvas.width,canvas.height);const photo=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(new Error('La conversion de la photo a échoué.')),'image/jpeg',.84));return {photo,width:canvas.width,height:canvas.height}}finally{source.close()}}
@@ -83,26 +88,39 @@ function holdToScreen(h,rect=imageRect()){if(!rect)return null;return {x:panX+(r
 function screenToHold(x,y,clamp=false,rect=imageRect()){if(!rect)return null;let px=((x-panX)/zoom-rect.left)/rect.width*100,py=((y-panY)/zoom-rect.top)/rect.height*100;if(!clamp&&(px<0||px>100||py<0||py>100))return null;return {x:Math.max(0,Math.min(100,px)),y:Math.max(0,Math.min(100,py))}}
 function nearestHold(x,y){let result=null,distance=24;for(const h of currentWall()?.holds||[]){const p=holdToScreen(h);if(!p)continue;const d=Math.hypot(p.x-x,p.y-y);if(d<=distance){result=h;distance=d}}return result}
 function syncUndo(){$('undo').hidden=!undoAction;$('undo-detail').hidden=!undoAction||!!routeDraft}
-function renderHolds(){
-  const w=currentWall(),layer=$('hold-layer');layer.replaceChildren();syncUndo();if(!w)return;
-  const holds=w.holds||[],route=routeDraft||w.routes?.find(r=>r.id===routeViewId),entries=route?.holds||[],byId=new Map(entries.map(e=>[e.holdId,e]));
-  const visible=routeViewId&&!routeDraft?holds.filter(h=>byId.has(h.id)):holds;
-  const counted=route?holds.filter(h=>byId.has(h.id)):holds,hand=counted.filter(h=>h.type==='hand').length,foot=counted.length-hand;
-  $('hold-count').textContent=counted.length+' prise'+(counted.length===1?'':'s')+' · '+hand+' main'+(hand===1?'':'s')+' · '+foot+' pied'+(foot===1?'':'s');
-  for(const stored of visible){
-    const h=dragHold?.before.id===stored.id?{...stored,...dragHold.position}:stored,p=holdToScreen(h);if(!p)continue;
-    const entry=byId.get(h.id),role=entry?.role||'normal',marker=document.createElement('button');marker.type='button';
-    marker.className='hold-marker'+(h.type==='foot'?' foot':'')+(h.id===selectedHoldId&&!route?' selected':'')+(entry?' route-included':'')+(routeDraft&&!entry?' unpicked':'')+(role==='normal'?'':' '+role);
-    marker.style.left=p.x+'px';marker.style.top=p.y+'px';marker.dataset.holdId=h.id;
-    marker.setAttribute('aria-label',(h.type==='hand'?'Main':'Pied')+(role==='start'?' de départ':role==='finish'?' d’arrivée':'')+' à '+Math.round(h.x)+' %, '+Math.round(h.y)+' %');
-    marker.setAttribute('aria-pressed',String(route?!!entry:h.id===selectedHoldId));marker.disabled=busyMutation;
-    marker.tabIndex=p.x<0||p.y<0||p.x>$('viewer').clientWidth||p.y>$('viewer').clientHeight?-1:0;
-    const symbol=document.createElement('span');symbol.className='hold-symbol';symbol.setAttribute('aria-hidden','true');marker.append(symbol);
-    marker.onclick=e=>{if(e.detail===0){if(routeDraft)chooseRouteHold(h.id);else if(!routeViewId){selectedHoldId=h.id;renderHolds()}}};layer.append(marker);
+function activeRoutes(){return (currentWall()?.routes||[]).filter(r=>routeViewIds.has(r.id))}
+function editorHolds(){return routeDraft?routeDraft.workingHolds:currentWall()?.holds||[]}
+function visibleCircleGroups(){
+  const groups=new Map(),routes=routeDraft?[routeDraft]:activeRoutes(),holds=editorHolds(),byId=new Map(holds.map(h=>[h.id,h]));
+  for(const route of routes)for(const entry of route.holds){
+    const stored=byId.get(entry.holdId);if(!stored)continue;
+    const h=dragHold?.before.id===stored.id?{...stored,...dragHold.position}:stored,key=h.x.toFixed(6)+':'+h.y.toFixed(6);
+    if(!groups.has(key))groups.set(key,{hold:h,uses:[]});groups.get(key).uses.push({route,entry,hold:h});
   }
-  const selected=holds.find(h=>h.id===selectedHoldId);$('hold-panel').hidden=!selected||!!route;
-  if(selected){$('hold-label').textContent=(selected.type==='hand'?'Main':'Pied')+' sélectionné'+(selected.type==='hand'?'e':'');$('nudge-panel').hidden=markMode!=='move'}
-  for(const id of ['delete-hold','move-selected','nudge-left','nudge-right','nudge-up','nudge-down','undo-detail'])$(id).disabled=busyMutation;
+  return [...groups.values()];
+}
+function circleColor(type,role){return role==='start'?'#63ff83':role==='finish'?'#df9aff':type==='foot'?'#52e1f2':'#ffd44f'}
+function circleName(h,role='normal'){return (h.type==='foot'?'Pied':'Main')+(role==='start'?' de départ':role==='finish'?' d’arrivée':'')}
+function renderHolds(){
+  const wall=currentWall(),layer=$('hold-layer');layer.replaceChildren();syncUndo();if(!wall)return;
+  const groups=visibleCircleGroups(),entries=routeDraft?.holds||activeRoutes().flatMap(r=>r.holds),hands=groups.filter(g=>g.hold.type==='hand').length;
+  $('hold-count').textContent=groups.length+' prise'+(groups.length===1?'':'s')+' · '+hands+' main'+(hands===1?'':'s')+' · '+(groups.length-hands)+' pied'+(groups.length-hands===1?'':'s');
+  for(const group of groups){
+    const {hold,uses}=group,p=holdToScreen(hold);if(!p)continue;const diameter=28+10*(uses.length-1),button=document.createElement('button');button.type='button';
+    button.className='hold-marker'+(hold.id===selectedHoldId?' selected':'');button.style.left=p.x+'px';button.style.top=p.y+'px';button.style.width=button.style.height=Math.max(48,diameter+12)+'px';button.dataset.holdId=hold.id;
+    const description=uses.map(use=>circleName(use.hold,use.entry.role)+(routeDraft?'':' dans '+use.route.name)).join(' ; ');
+    button.setAttribute('aria-label',description+' à '+Math.round(hold.x)+' %, '+Math.round(hold.y)+' %');button.disabled=busyMutation;
+    button.tabIndex=p.x<0||p.y<0||p.x>$('viewer').clientWidth||p.y>$('viewer').clientHeight?-1:0;
+    uses.forEach((use,index)=>{const ring=document.createElement('span');ring.className='multi-ring';ring.style.width=ring.style.height=(28+index*10)+'px';ring.style.borderColor=circleColor(use.hold.type,use.entry.role);ring.dataset.routeId=use.route.id;ring.setAttribute('aria-hidden','true');button.append(ring)});
+    button.onclick=event=>{if(event.detail===0){if(routeDraft&&draftPhase==='paint'&&routeOperation==='paint')paintCircle(hold);else if(routeDraft&&routeOperation==='remove')removeDraftCircle(hold.id);else{selectedHoldId=hold.id;renderHolds()}}};layer.append(button);
+  }
+  $('hold-panel').hidden=true;const selected=groups.find(g=>g.uses.some(u=>u.hold.id===selectedHoldId));$('circle-details').hidden=!selected;
+  const actions=$('circle-details-actions');actions.replaceChildren();if(selected){
+    $('circle-details-title').textContent=selected.uses.map(u=>circleName(u.hold,u.entry.role)+(routeDraft?'':' · '+u.route.name)).join(' / ');
+    if(routeDraft){for(const [label,action]of [['Déplacer ce cercle',()=>{routeOperation='move';renderRouteSelection()}],['Retirer de la voie',()=>removeDraftCircle(selectedHoldId)]]){const b=document.createElement('button');b.textContent=label;b.type='button';b.disabled=busyMutation;b.onclick=action;actions.append(b)}
+      for(const [label,dx,dy]of [['←',-.5,0],['↑',0,-.5],['↓',0,.5],['→',.5,0]]){const b=document.createElement('button');b.textContent=label;b.type='button';b.setAttribute('aria-label','Ajuster le cercle '+label);b.disabled=busyMutation;b.onclick=()=>{const h=editorHolds().find(h=>h.id===selectedHoldId);if(h)moveDraftCircle(h.id,{x:Math.min(100,Math.max(0,h.x+dx)),y:Math.min(100,Math.max(0,h.y+dy))})};actions.append(b)}
+    }else for(const use of selected.uses){const b=document.createElement('button');b.textContent='Modifier les cercles · '+use.route.name;b.type='button';b.onclick=()=>beginRoute(use.route.id,'paint');actions.append(b)}
+  }
 }
 
 function setMode(mode){if(busyMutation)return;cancelGesture();markMode=mode;$('viewer').dataset.mode=mode;for(const m of ['explore','add','move'])$('mode-'+m).setAttribute('aria-pressed',String(m===mode));$('type-choice').hidden=mode!=='add';$('mark-help').textContent=mode==='add'?'Choisissez Main ou Pied, puis touchez chaque prise. Glisser déplace la photo ; pincer permet de zoomer.':mode==='move'?'Glissez une prise pour la déplacer. Vous pouvez aussi la sélectionner, puis toucher sa nouvelle position.':'Pincez pour zoomer, glissez pour explorer. Touchez une prise pour la sélectionner.';renderHolds()}
@@ -117,137 +135,190 @@ function transform(){const v=$('viewer');panX=Math.min(0,Math.max(v.clientWidth*
 function resetZoom(){cancelGesture();zoom=1;panX=panY=0;transform()}
 function zoomAt(next,cx,cy){next=Math.max(1,Math.min(6,next));const ratio=next/zoom;panX=cx-(cx-panX)*ratio;panY=cy-(cy-panY)*ratio;zoom=next;transform()}
 function gesture(){const p=[...points.values()],rect=$('viewer').getBoundingClientRect();return p.length>1?{x:(p[0].x+p[1].x)/2-rect.left,y:(p[0].y+p[1].y)/2-rect.top,d:Math.hypot(p[0].x-p[1].x,p[0].y-p[1].y)}:p.length?{x:p[0].x-rect.left,y:p[0].y-rect.top,d:0}:null}
-$('viewer').onpointerdown=e=>{if(busyMutation||(e.pointerType==='mouse'&&e.button!==0))return;e.preventDefault();const p=localPoint(e);points.set(e.pointerId,{x:e.clientX,y:e.clientY});$('viewer').setPointerCapture(e.pointerId);if(points.size===1){const hit=nearestHold(p.x,p.y);press={id:e.pointerId,start:p,moved:false,multi:false,hitId:hit?.id||null};if(!routeDraft&&!routeViewId&&markMode==='move'&&hit){selectedHoldId=hit.id;dragHold={before:{...hit},position:{x:hit.x,y:hit.y}};renderHolds()}}else{if(press)press.multi=true;dragHold=null;renderHolds()}previous=gesture()};
-$('viewer').onpointermove=e=>{if(!points.has(e.pointerId))return;e.preventDefault();points.set(e.pointerId,{x:e.clientX,y:e.clientY});const p=localPoint(e);if(press&&Math.hypot(p.x-press.start.x,p.y-press.start.y)>8)press.moved=true;if(dragHold&&points.size===1&&!press?.multi){if(press?.moved){dragHold.position=screenToHold(p.x,p.y,true);renderHolds()}return}const g=gesture();if(previous){if(g.d>0&&previous.d>0)zoomAt(zoom*g.d/previous.d,previous.x,previous.y);if(press?.moved||press?.multi){panX+=g.x-previous.x;panY+=g.y-previous.y;transform()}}previous=g};
-$('viewer').onpointerup=async e=>{if(!points.has(e.pointerId))return;const p=localPoint(e),ending=press,drag=dragHold;points.delete(e.pointerId);previous=gesture();if(points.size)return;press=null;dragHold=null;if(!ending||ending.multi){renderHolds();return}if(drag&&ending.moved){const moved={...drag.before,...drag.position};if(!sameHold(moved,drag.before))await saveHold('move',moved,drag.before);else renderHolds();return}if(ending.moved){renderHolds();return}if(routeDraft){if(ending.hitId)chooseRouteHold(ending.hitId);else message('Touchez une prise déjà marquée sur la photo.');return}if(routeViewId)return;if(ending.hitId){selectedHoldId=ending.hitId;renderHolds();return}const position=screenToHold(p.x,p.y);if(!position){message('Touchez la photo, à l’intérieur de ses bords.');return}if(markMode==='add'){await saveHold('add',{id:crypto.randomUUID(),type:newHoldType,...position})}else if(markMode==='move'&&selectedHoldId){const h=currentWall()?.holds?.find(h=>h.id===selectedHoldId);if(h)await saveHold('move',{...h,...position},h)}else{selectedHoldId=null;renderHolds()}};
-for(const name of ['pointercancel','lostpointercapture'])$('viewer').addEventListener(name,e=>{if(!points.has(e.pointerId))return;cancelGesture();renderHolds()});
+function pointerHold(x,y){
+  const selected=new Set(routeDraft?.holds.map(e=>e.holdId)||activeRoutes().flatMap(r=>r.holds.map(e=>e.holdId)));let result=null,distance=24;
+  for(const h of editorHolds()){if(!selected.has(h.id))continue;const p=holdToScreen(h),d=p?Math.hypot(p.x-x,p.y-y):Infinity;if(d<distance){result=h;distance=d}}
+  if(result||!routeDraft||routeOperation!=='paint')return result;
+  distance=16;for(const h of editorHolds()){const p=holdToScreen(h),d=p?Math.hypot(p.x-x,p.y-y):Infinity;if(d<distance){result=h;distance=d}}return result;
+}
+$('viewer').onpointerdown=event=>{
+  if(busyMutation||(routeDraft&&draftPhase!=='paint')||(event.pointerType==='mouse'&&event.button!==0))return;
+  event.preventDefault();const point=localPoint(event);points.set(event.pointerId,{x:event.clientX,y:event.clientY});$('viewer').setPointerCapture(event.pointerId);
+  if(points.size===1){const hit=pointerHold(point.x,point.y);press={id:event.pointerId,start:point,moved:false,multi:false,hitId:hit?.id||null};
+    if(routeDraft&&routeOperation==='move'&&hit&&routeDraft.holds.some(e=>e.holdId===hit.id)){selectedHoldId=hit.id;dragHold={before:{...hit},position:{x:hit.x,y:hit.y}};renderHolds()}
+  }else{if(press)press.multi=true;dragHold=null;renderHolds()}previous=gesture();
+};
+$('viewer').onpointermove=event=>{
+  if(!points.has(event.pointerId))return;event.preventDefault();points.set(event.pointerId,{x:event.clientX,y:event.clientY});const p=localPoint(event);
+  if(press&&Math.hypot(p.x-press.start.x,p.y-press.start.y)>8)press.moved=true;
+  if(dragHold&&points.size===1&&!press?.multi){if(press?.moved){dragHold.position=screenToHold(p.x,p.y,true);renderHolds()}return}
+  const current=gesture();if(previous){if(current.d>0&&previous.d>0)zoomAt(zoom*current.d/previous.d,previous.x,previous.y);if(press?.moved||press?.multi){panX+=current.x-previous.x;panY+=current.y-previous.y;transform()}}previous=current;
+};
+$('viewer').onpointerup=event=>{
+  if(!points.has(event.pointerId))return;const p=localPoint(event),ended=press,drag=dragHold;points.delete(event.pointerId);previous=gesture();if(points.size)return;press=null;dragHold=null;
+  if(!ended||ended.multi){renderHolds();return}if(drag&&ended.moved){moveDraftCircle(drag.before.id,drag.position);return}if(ended.moved){renderHolds();return}
+  const hit=ended.hitId?editorHolds().find(h=>h.id===ended.hitId):null;
+  if(!routeDraft){selectedHoldId=hit?.id||null;renderHolds();return}
+  if(routeOperation==='remove'){if(hit)removeDraftCircle(hit.id);return}
+  if(routeOperation==='explore'){selectedHoldId=hit?.id||null;renderHolds();return}
+  const position=screenToHold(p.x,p.y);if(!position){message('Touchez l’intérieur de la photo.');return}
+  if(routeOperation==='move'){if(hit){selectedHoldId=hit.id;renderHolds()}else if(selectedHoldId)moveDraftCircle(selectedHoldId,position);return}
+  paintCircle(hit,position);
+};
+for(const name of ['pointercancel','lostpointercapture'])$('viewer').addEventListener(name,event=>{if(!points.has(event.pointerId))return;cancelGesture();renderHolds()});
+// Legacy controls stay hidden. All visible circle operations now edit a route draft.
 for(const mode of ['explore','add','move'])$('mode-'+mode).onclick=()=>setMode(mode);
-for(const type of ['hand','foot'])$('type-'+type).onclick=()=>{newHoldType=type;for(const t of ['hand','foot'])$('type-'+t).setAttribute('aria-pressed',String(t===type))};
-$('wall-photo').onload=()=>renderHolds();$('move-selected').onclick=()=>{setMode('move');$('viewer').scrollIntoView({block:'center',behavior:'smooth'})};$('deselect-hold').onclick=()=>{selectedHoldId=null;renderHolds()};
-$('delete-hold').onclick=async()=>{if(busyMutation)return;const wallId=selectedId,h=currentWall()?.holds?.find(h=>h.id===selectedHoldId);if(!h)return;if(await confirmAction('Supprimer cette prise ?','Cette '+(h.type==='hand'?'prise de main':'prise de pied')+' sera retirée du mur. Vous pourrez annuler la dernière action tant que cette page reste ouverte.'))await saveHold('delete',h,h,true,wallId)};
-for(const [direction,dx,dy]of [['left',-.5,0],['right',.5,0],['up',0,-.5],['down',0,.5]])$('nudge-'+direction).onclick=async()=>{const h=currentWall()?.holds?.find(h=>h.id===selectedHoldId);if(!h)return;const moved={...h,x:Math.max(0,Math.min(100,h.x+dx)),y:Math.max(0,Math.min(100,h.y+dy))};if(!sameHold(moved,h))await saveHold('move',moved,h)};
+for(const type of ['hand','foot'])$('type-'+type).onclick=()=>{newHoldType=type};
+$('wall-photo').onload=()=>renderHolds();
 $('zoom-in').onclick=()=>zoomAt(zoom*1.4,$('viewer').clientWidth/2,$('viewer').clientHeight/2);$('zoom-out').onclick=()=>zoomAt(zoom/1.4,$('viewer').clientWidth/2,$('viewer').clientHeight/2);$('zoom-reset').onclick=resetZoom;window.addEventListener('resize',()=>{if(selectedId)resetZoom()});
 $('add-wall').onclick=$('add-first').onclick=addDialog;$('back').onclick=showHome;$('choose-gallery').onclick=()=>$('gallery').click();$('choose-camera').onclick=()=>$('camera').click();$('gallery').onchange=$('camera').onchange=choosePhoto;
 $('cancel-wall').onclick=()=>$('wall-dialog').close();$('wall-dialog').addEventListener('close',cleanDraft);
-$('wall-form').onsubmit=async e=>{e.preventDefault();if(busyPhoto||busyMutation)return;const name=$('wall-name').value.trim();if(!name){$('wall-error').textContent='Donnez un nom au mur.';return}if(!draft){$('wall-error').textContent='Choisissez une photo avant de créer le mur.';return}busyMutation=true;$('save-wall').disabled=true;try{const wall={id:crypto.randomUUID(),name,...draft,createdAt:Date.now(),holds:[],routes:[]};await changeWall('add',wall);undoAction={kind:'delete',wall};$('wall-dialog').close();await refresh();message('Mur enregistré sur cet appareil.')}catch(err){$('wall-error').textContent=humanError(err)}finally{busyMutation=false;$('save-wall').disabled=false}};
-$('delete').onclick=async()=>{if(busyMutation)return;const w=walls.find(w=>w.id===selectedId);if(!w)return;if(!await confirmAction('Supprimer ce mur ?','« '+w.name+' » et sa photo seront supprimés de cet appareil. Vous pourrez annuler cette action depuis la liste des murs, tant que cette page reste ouverte.'))return;busyMutation=true;try{await changeWall('delete',w);undoAction={kind:'add',wall:w};showHome();await refresh();message('Mur supprimé. Vous pouvez annuler depuis la liste.')}catch(e){message(humanError(e))}finally{busyMutation=false}};
+$('wall-form').onsubmit=async e=>{e.preventDefault();if(busyPhoto||busyMutation)return;const name=$('wall-name').value.trim();if(!name){$('wall-error').textContent='Donnez un nom au mur.';return}if(!draft){$('wall-error').textContent='Choisissez une photo avant de créer le mur.';return}busyMutation=true;$('save-wall').disabled=true;try{const wall={id:crypto.randomUUID(),name,...draft,createdAt:Date.now(),holds:[],routes:[]};await changeWall('add',wall);undoAction={kind:'delete',wall};$('wall-dialog').close();await refresh();showWall(wall.id);message('Mur créé. Créez maintenant votre première voie.')}catch(err){$('wall-error').textContent=humanError(err)}finally{busyMutation=false;$('save-wall').disabled=false;renderRoutes();renderHolds()}};
+$('delete').onclick=async()=>{if(busyMutation)return;const w=walls.find(w=>w.id===selectedId);if(!w)return;if(!await confirmAction('Supprimer ce mur ?','« '+w.name+' » et sa photo seront supprimés de cet appareil. Vous pourrez annuler cette action depuis la liste des murs, tant que cette page reste ouverte.'))return;busyMutation=true;try{await changeWall('delete',w);undoAction={kind:'add',wall:w};showHome();await refresh();message('Mur supprimé. Vous pouvez annuler depuis la liste.')}catch(e){message(humanError(e))}finally{busyMutation=false;renderRoutes();renderHolds()}};
 $('rename').onclick=()=>{const w=walls.find(w=>w.id===selectedId);if(!w)return;$('rename-name').value=w.name;$('rename-error').textContent='';$('rename-dialog').showModal()};$('rename-close').onclick=()=>$('rename-dialog').close();
-$('rename-form').onsubmit=async e=>{e.preventDefault();if(busyMutation)return;const w=walls.find(w=>w.id===selectedId),name=$('rename-name').value.trim();if(!w||!name){$('rename-error').textContent='Donnez un nom au mur.';return}busyMutation=true;try{await changeWall('rename',{...w,name});undoAction={kind:'rename',wall:w};$('rename-dialog').close();await refresh();message('Nom enregistré.')}catch(err){$('rename-error').textContent=humanError(err)}finally{busyMutation=false}};
-$('undo').onclick=$('undo-detail').onclick=async()=>{if(!undoAction||busyMutation)return;const action=undoAction;if(action.kind==='route'){if(await saveRouteChange(action.operation,action.route,action.expected,false,action.wallId)){undoAction=null;syncUndo();message('Dernière action annulée.')}return}if(action.kind==='hold'){if(await saveHold(action.operation,action.hold,action.expected,false,action.wallId)){undoAction=null;syncUndo();message('Dernière action annulée.')}return}busyMutation=true;try{await changeWall(action.kind,action.wall);undoAction=null;await refresh();renderHolds();message('Dernière action annulée.')}catch(err){message(humanError(err))}finally{busyMutation=false;renderHolds()}};
+$('rename-form').onsubmit=async e=>{e.preventDefault();if(busyMutation)return;const w=walls.find(w=>w.id===selectedId),name=$('rename-name').value.trim();if(!w||!name){$('rename-error').textContent='Donnez un nom au mur.';return}busyMutation=true;try{await changeWall('rename',{...w,name});undoAction={kind:'rename',wall:w};$('rename-dialog').close();await refresh();message('Nom enregistré.')}catch(err){$('rename-error').textContent=humanError(err)}finally{busyMutation=false;renderRoutes();renderHolds()}};
+$('undo').onclick=$('undo-detail').onclick=async()=>{if(!undoAction||busyMutation)return;const action=undoAction;if(action.kind==='route'){if(await saveRouteChange(action.operation,action.route,action.expected,false,action.wallId,action.bundle||[])){undoAction=null;syncUndo();message('Dernière action annulée.')}return}if(action.kind==='hold'){if(await saveHold(action.operation,action.hold,action.expected,false,action.wallId)){undoAction=null;syncUndo();message('Dernière action annulée.')}return}busyMutation=true;try{await changeWall(action.kind,action.wall);undoAction=null;await refresh();renderHolds();message('Dernière action annulée.')}catch(err){message(humanError(err))}finally{busyMutation=false;renderHolds()}};
 $('author-dialog').oncancel=e=>e.preventDefault();$('author-form').onsubmit=async e=>{e.preventDefault();const name=$('author-first').value.trim();if(!name){$('author-error').textContent='Indiquez un prénom ou un pseudo.';return}try{await writeSetting('author',name);author=name;$('author-dialog').close();await storageStatus(true)}catch(err){$('author-error').textContent=humanError(err)}};
 $('settings-open').onclick=async()=>{if(!db)return;$('author-name').value=author;$('settings-error').textContent='';$('settings-dialog').showModal();await storageStatus()};$('settings-close').onclick=()=>$('settings-dialog').close();$('persist').onclick=()=>storageStatus(true);
 $('settings-form').onsubmit=async e=>{e.preventDefault();const name=$('author-name').value.trim();if(!name){$('settings-error').textContent='Indiquez un prénom ou un pseudo.';return}try{await writeSetting('author',name);author=name;$('settings-dialog').close();message('Réglages enregistrés.')}catch(err){$('settings-error').textContent=humanError(err)}};
 function networkStatus(){$('network').classList.toggle('offline',!navigator.onLine);$('network').lastElementChild.textContent=navigator.onLine?'En ligne':'Hors ligne'}window.addEventListener('online',networkStatus);window.addEventListener('offline',networkStatus);networkStatus();
 async function setupOffline(){if(!('serviceWorker'in navigator)){$('offline-status').textContent='Mode hors ligne indisponible dans ce navigateur.';return}try{const registration=await navigator.serviceWorker.register('./sw.js'),worker=registration.installing||registration.waiting;if(worker&&worker.state!=='activated')await new Promise((resolve,reject)=>{const timer=setTimeout(()=>finish(new Error('Préparation incomplète.')),30000);function finish(error){clearTimeout(timer);worker.removeEventListener('statechange',changed);error?reject(error):resolve()}function changed(){if(worker.state==='activated')finish();else if(worker.state==='redundant')finish(new Error('La préparation a échoué.'))}worker.addEventListener('statechange',changed);changed()});await navigator.serviceWorker.ready;$('offline-status').textContent='✓ Application prête pour une utilisation hors ligne.'}catch{$('offline-status').textContent='Mode hors ligne non préparé. Restez connecté et rechargez la page pour réessayer.'}}
-let routeDraft=null,routeViewId=null,routeTool='normal',routeChoiceHistory=[];
+let routeDraft=null,routeViewId=null,routeViewIds=new Set(),routeChoiceHistory=[],draftPhase='info',routePaint='start',routeOperation='paint',routeEndpointType='hand';
 function clone(value){return structuredClone(value)}
 function sameRoute(a,b){return !!a&&!!b&&JSON.stringify(a)===JSON.stringify(b)}
-function validateRoute(route,wall){
-  if(!route||typeof route.id!=='string'||!route.id)throw new Error('Cette voie ne possède pas d’identifiant.');
-  if(typeof route.name!=='string'||!route.name.trim()||route.name.length>80)throw new Error('Donnez à la voie un nom de 80 caractères maximum.');
-  if(typeof route.author!=='string'||!route.author.trim()||route.author.length>60)throw new Error('Indiquez un auteur de 60 caractères maximum.');
+function routeForm(){return {name:$('route-name').value.trim(),author:$('route-author').value.trim(),grade:$('route-grade').value.trim(),comment:$('route-comment').value.trim()}}
+function validateRouteFields(route){
+  if(typeof route.name!=='string'||!route.name.trim()||route.name.length>80)throw new Error('Indiquez un nom de voie, jusqu’à 80 caractères.');
+  if(typeof route.author!=='string'||!route.author.trim()||route.author.length>60)throw new Error('Indiquez un auteur, jusqu’à 60 caractères.');
   if(typeof route.grade!=='string'||route.grade.length>30||typeof route.comment!=='string'||route.comment.length>2000)throw new Error('La cotation ou le commentaire est trop long.');
-  if(!Array.isArray(route.holds)||!route.holds.length)throw new Error('Sélectionnez au moins une prise sur la photo.');
-  const known=new Set((wall.holds||[]).map(h=>h.id)),seen=new Set();
-  for(const entry of route.holds){if(!entry||!known.has(entry.holdId))throw new Error('Une prise de cette voie n’existe plus. Rechargez le mur.');if(seen.has(entry.holdId))throw new Error('Une prise ne doit figurer qu’une fois dans une voie.');if(!['normal','start','finish'].includes(entry.role))throw new Error('Le rôle d’une prise est incorrect.');seen.add(entry.holdId)}
 }
-function changeRoute(wallId,kind,route,expected=null){
+function validateRoute(route,wall){
+  validateRouteFields(route);if(typeof route.id!=='string'||!route.id)throw new Error('Cette voie n’a pas d’identifiant.');
+  if(!Array.isArray(route.holds)||!route.holds.length)throw new Error('Posez au moins un cercle sur la photo avant d’enregistrer.');
+  const known=new Set((wall.holds||[]).map(h=>h.id)),seen=new Set();for(const entry of route.holds){if(!entry||!known.has(entry.holdId))throw new Error('Une prise n’existe plus. Rechargez le mur.');if(seen.has(entry.holdId))throw new Error('Une prise ne peut figurer qu’une fois dans une voie.');if(!['normal','start','finish'].includes(entry.role))throw new Error('Le rôle d’une prise est incorrect.');seen.add(entry.holdId)}
+}
+function validateHoldRecord(h){if(!h||typeof h.id!=='string'||!h.id||!['hand','foot'].includes(h.type)||!Number.isFinite(h.x)||!Number.isFinite(h.y)||h.x<0||h.x>100||h.y<0||h.y>100)throw new Error('Les coordonnées d’une prise sont incorrectes.')}
+// One atomic transaction stores the route and its circles. Existing shared circles are never overwritten.
+function changeRoute(wallId,kind,route,expected=null,bundle=[]){
   return new Promise((resolve,reject)=>{
-    const tx=db.transaction('walls','readwrite'),store=tx.objectStore('walls');let updated,reason;
+    const tx=db.transaction('walls','readwrite'),store=tx.objectStore('walls');let reason,updated;
     tx.oncomplete=()=>resolve(updated);tx.onerror=()=>reject(reason||tx.error);tx.onabort=()=>reject(reason||tx.error||new Error('Enregistrement interrompu.'));
     const fail=error=>{reason=error;tx.abort()},request=store.get(wallId);
-    request.onsuccess=()=>{
-      const wall=request.result;if(!wall){fail(new Error('Ce mur a été supprimé. Revenez à la liste.'));return}
-      try{
-        const routes=wall.routes||[],index=routes.findIndex(r=>r.id===route.id);
-        if(kind==='add'){if(index!==-1)throw new Error('Cette voie existe déjà.');validateRoute(route,wall);routes.push(clone(route))}
-        else{
-          if(index===-1||!sameRoute(routes[index],expected))throw new Error('Cette voie a changé dans une autre fenêtre. Rechargez le mur avant de réessayer.');
-          if(kind==='update'){validateRoute(route,wall);routes[index]=clone(route)}
-          else if(kind==='delete')routes.splice(index,1);
-          else throw new Error('Action inconnue.');
-        }
-        updated={...wall,routes};store.put(updated);
-      }catch(error){fail(error)}
-    };
+    request.onsuccess=()=>{try{
+      const wall=request.result;if(!wall)throw new Error('Ce mur n’existe plus. Revenez à la liste.');
+      const routes=clone(wall.routes||[]),holds=clone(wall.holds||[]),index=routes.findIndex(r=>r.id===route.id);
+      if(kind==='add'){if(index!==-1)throw new Error('Cette voie existe déjà.')}
+      else if(index===-1||!sameRoute(routes[index],expected))throw new Error('Cette voie a changé dans une autre fenêtre. Rechargez le mur avant de réessayer.');
+      if(kind!=='delete'){
+        const referenced=new Set((route.holds||[]).map(e=>e.holdId));for(const h of bundle){if(!referenced.has(h.id))continue;validateHoldRecord(h);const found=holds.find(item=>item.id===h.id);if(found&&!sameHold(found,h))throw new Error('Une prise partagée a changé dans une autre fenêtre. Rechargez le mur.');if(!found)holds.push(clone(h))}
+        validateRoute(route,{...wall,holds});
+      }
+      if(kind==='add')routes.push(clone(route));else if(kind==='update')routes[index]=clone(route);else if(kind==='delete')routes.splice(index,1);else throw new Error('Action inconnue.');
+      const used=new Set(routes.flatMap(r=>r.holds.map(e=>e.holdId)));
+      updated={...wall,routes,holds:holds.filter(h=>!h.managedByRoutes||used.has(h.id))};store.put(updated);
+    }catch(error){fail(error)}};
   });
 }
-async function saveRouteChange(kind,route,expected=null,recordUndo=true,wallId=selectedId){
-  if(busyMutation)return false;busyMutation=true;$('route-error').textContent='';$('save-state').textContent='Enregistrement de la voie…';renderRoutes();renderHolds();
+async function saveRouteChange(kind,route,expected=null,recordUndo=true,wallId=selectedId,bundle=[]){
+  if(busyMutation)return false;const beforeWall=walls.find(w=>w.id===wallId),beforeIds=new Set((expected?.holds||route.holds||[]).map(e=>e.holdId));
+  const restoreBundle=clone((beforeWall?.holds||[]).filter(h=>beforeIds.has(h.id)));
+  busyMutation=true;$('route-error').textContent='';$('route-info-error').textContent='';renderRoutes();renderHolds();
   try{
-    const wall=await changeRoute(wallId,kind,route,expected),index=walls.findIndex(w=>w.id===wall.id);if(index>=0)walls[index]=wall;
-    if(recordUndo)undoAction={kind:'route',wallId,operation:kind==='add'?'delete':kind==='delete'?'add':'update',route:clone(kind==='update'?expected:route),expected:kind==='delete'?null:clone(route)};
-    $('save-state').textContent='✓ Modification enregistrée sur cet appareil.';return true;
-  }catch(error){$('route-error').textContent=humanError(error);$('save-state').textContent='Échec : '+humanError(error);message(humanError(error));return false}
+    const wall=await changeRoute(wallId,kind,route,expected,bundle),index=walls.findIndex(w=>w.id===wall.id);if(index>=0)walls[index]=wall;
+    if(recordUndo)undoAction={kind:'route',wallId,operation:kind==='add'?'delete':kind==='delete'?'add':'update',route:clone(kind==='update'?expected:route),expected:kind==='delete'?null:clone(route),bundle:restoreBundle};
+    return true;
+  }catch(error){$('route-error').textContent=$('route-info-error').textContent=humanError(error);message(humanError(error));return false}
   finally{busyMutation=false;renderRoutes();renderHolds()}
 }
-function routeForm(){return {name:$('route-name').value.trim(),author:$('route-author').value.trim(),grade:$('route-grade').value.trim(),comment:$('route-comment').value.trim()}}
-function routeIsDirty(){if(!routeDraft)return false;return routeChoiceHistory.length>0||JSON.stringify(routeForm())!==JSON.stringify(routeDraft.initialFields)}
+function routeIsDirty(){return !!routeDraft&&(routeChoiceHistory.length>0||JSON.stringify(routeForm())!==JSON.stringify(routeDraft.initialFields))}
+function saveDraftSnapshot(){routeChoiceHistory.push({holds:clone(routeDraft.holds),workingHolds:clone(routeDraft.workingHolds),selectedHoldId});$('route-error').textContent=''}
+function cleanupDraft(){const referenced=new Set(routeDraft.holds.map(e=>e.holdId)),existing=new Set((currentWall().holds||[]).map(h=>h.id));routeDraft.workingHolds=routeDraft.workingHolds.filter(h=>existing.has(h.id)||referenced.has(h.id))}
+function paintCircle(hit,position=null){
+  if(!routeDraft||draftPhase!=='paint'||busyMutation)return;const role=routePaint==='start'?'start':routePaint==='finish'?'finish':'normal',type=routePaint==='foot'?'foot':routePaint==='hand'?'hand':routeEndpointType;
+  if(!hit&&!position)return;let hold=hit,entry=hit?routeDraft.holds.find(e=>e.holdId===hit.id):null;
+  if(entry&&entry.role===role&&(role!=='normal'||hold.type===type)){selectedHoldId=hold.id;renderHolds();return}
+  if(hit&&role==='normal'&&hit.type!==type&&(currentWall().routes||[]).some(r=>r.id!==routeDraft.id&&r.holds.some(e=>e.holdId===hit.id))){message('Cette prise est utilisée comme '+(hit.type==='hand'?'main':'pied')+' dans une autre voie. Son type reste fixe.');return}
+  saveDraftSnapshot();
+  if(!hold){hold={id:crypto.randomUUID(),type,...position,managedByRoutes:true};routeDraft.workingHolds.push(hold)}
+  else if(role==='normal'&&hold.type!==type){hold={...hold,id:crypto.randomUUID(),type,managedByRoutes:true};routeDraft.workingHolds.push(hold);if(entry)entry.holdId=hold.id}
+  if(entry)entry.role=role;else routeDraft.holds.push({holdId:hold.id,role});selectedHoldId=hold.id;cleanupDraft();renderRouteSelection();renderHolds();
+}
+function removeDraftCircle(id){if(!routeDraft||busyMutation||!routeDraft.holds.some(e=>e.holdId===id))return;saveDraftSnapshot();routeDraft.holds=routeDraft.holds.filter(e=>e.holdId!==id);selectedHoldId=null;cleanupDraft();renderRouteSelection();renderHolds()}
+function moveDraftCircle(id,position){
+  if(!routeDraft||busyMutation)return;const hold=routeDraft.workingHolds.find(h=>h.id===id),entry=routeDraft.holds.find(e=>e.holdId===id);if(!hold||!entry||!position)return;
+  if(hold.x===position.x&&hold.y===position.y){selectedHoldId=id;renderHolds();return}saveDraftSnapshot();let updated;
+  if((currentWall().holds||[]).some(h=>h.id===id)){updated={...hold,...position,id:crypto.randomUUID(),managedByRoutes:true};routeDraft.workingHolds.push(updated);entry.holdId=updated.id}
+  else{Object.assign(hold,position);updated=hold}selectedHoldId=updated.id;cleanupDraft();renderRouteSelection();renderHolds();
+}
+function routeTitle(route,wall=currentWall()){return route.name+((wall?.routes||[]).filter(r=>r.name===route.name).length>1?', '+route.author:'')}
 function renderRouteSelection(){
   if(!routeDraft)return;const entries=routeDraft.holds,starts=entries.filter(e=>e.role==='start').length,finishes=entries.filter(e=>e.role==='finish').length;
-  $('route-selection-count').textContent=entries.length+' prise'+(entries.length===1?'':'s')+' sélectionnée'+(entries.length===1?'':'s')+' · '+starts+' départ'+(starts===1?'':'s')+' · '+finishes+' arrivée'+(finishes===1?'':'s');
+  $('paint-title').textContent='2 · Cercles de '+(routeForm().name||'la voie');$('route-selection-count').textContent=entries.length+' cercle'+(entries.length===1?'':'s')+' · '+starts+' départ'+(starts===1?'':'s')+' · '+finishes+' arrivée'+(finishes===1?'':'s');
+  for(const choice of ['start','finish','hand','foot'])$('paint-'+choice).setAttribute('aria-pressed',String(routePaint===choice));
+  for(const op of ['paint','move','remove','explore'])$('op-'+op).setAttribute('aria-pressed',String(routeOperation===op));
+  for(const type of ['hand','foot'])$('endpoint-'+type).setAttribute('aria-pressed',String(routeEndpointType===type));
+  $('endpoint-types').hidden=routeOperation!=='paint'||!['start','finish'].includes(routePaint);
+  $('paint-help').textContent=routeOperation==='paint'?'Touchez la photo pour poser le cercle choisi. Touchez un cercle existant pour lui attribuer ce rôle.':routeOperation==='move'?'Glissez un cercle, ou sélectionnez-le puis touchez sa nouvelle position.':routeOperation==='remove'?'Touchez les cercles à retirer de cette voie.':'Glissez pour explorer. Pincez pour zoomer dans tous les modes.';
   $('route-undo-choice').hidden=!routeChoiceHistory.length;
-  for(const tool of ['normal','start','finish','remove'])$('route-tool-'+tool).setAttribute('aria-pressed',String(routeTool===tool));
 }
 function renderRoutes(){
-  const wall=currentWall();if(!wall)return;const routes=wall.routes||[];if(routeViewId&&!routes.some(r=>r.id===routeViewId))routeViewId=null;
-  const editing=!!routeDraft,viewed=routes.find(r=>r.id===routeViewId);
-  $('route-editor').hidden=$('route-tools').hidden=!editing;$('mark-toolbar').hidden=editing||!!viewed;$('hold-panel').hidden=editing||!!viewed||!selectedHoldId;
-  $('create-route').hidden=editing;$('all-holds').hidden=editing||!viewed;$('routes-section').hidden=editing;$('route-preview').hidden=editing||!viewed;
-  $('rename').hidden=$('delete').hidden=editing;$('route-count').textContent=routes.length;$('routes-empty').hidden=routes.length>0;
-  for(const id of ['route-save','route-cancel','route-undo-choice','create-route','all-holds','edit-viewed-route'])$(id).disabled=busyMutation;
-  if(viewed){$('route-preview-title').textContent=viewed.name;$('route-preview-meta').textContent=(viewed.grade?viewed.grade+' · ':'')+'Par '+viewed.author+' · '+viewed.holds.length+(viewed.holds.length===1?' prise':' prises');$('route-preview-comment').textContent=viewed.comment||'';$('route-preview-comment').hidden=!viewed.comment}
-  const list=$('route-list');list.replaceChildren();const names=new Map();for(const route of routes)names.set(route.name,(names.get(route.name)||0)+1);
-  for(const route of routes){
-    const card=document.createElement('article');card.className='route-card';const title=document.createElement('h3');title.textContent=route.name+(names.get(route.name)>1?', '+route.author:'');
-    const meta=document.createElement('p');meta.className='muted';meta.textContent=(route.grade?route.grade+' · ':'')+'Par '+route.author+' · '+route.holds.length+(route.holds.length===1?' prise':' prises');
-    const roles=document.createElement('p');roles.className='small muted';roles.textContent=route.holds.filter(e=>e.role==='start').length+' départ(s) · '+route.holds.filter(e=>e.role==='finish').length+' arrivée(s)';
-    const buttons=document.createElement('div');buttons.className='row';
-    for(const [label,action]of [['Voir',()=>viewRoute(route.id)],['Modifier',()=>beginRoute(route.id)],['Supprimer',()=>deleteRoute(route.id)]]){const button=document.createElement('button');button.textContent=label;button.type='button';button.disabled=busyMutation;if(label==='Supprimer')button.className='danger';button.setAttribute('aria-label',label+' la voie '+route.name);button.onclick=action;buttons.append(button)}
-    card.append(title,meta,roles,buttons);list.append(card);
+  const wall=currentWall();if(!wall)return;const routes=wall.routes||[];routeViewIds=new Set([...routeViewIds].filter(id=>routes.some(r=>r.id===id)));
+  const editing=!!routeDraft,painting=editing&&draftPhase==='paint',viewed=activeRoutes(),showPhoto=painting||(!editing&&viewed.length>0);
+  $('route-editor').hidden=!editing||painting;$('route-tools').hidden=!painting;$('route-save-controls').hidden=!painting;
+  $('mark-toolbar').hidden=true;$('hold-panel').hidden=true;$('circle-details').hidden=true;
+  $('create-route').hidden=editing;$('all-holds').hidden=editing||!viewed.length;$('show-selection').hidden=editing||!viewed.length;
+  $('routes-section').hidden=editing;$('multi-hint').hidden=!routes.length;$('route-preview').hidden=editing||!viewed.length;
+  for(const id of ['viewer','zoom-tools','photo-legend','hold-summary'])$(id).hidden=!showPhoto;
+  $('rename').hidden=$('delete').hidden=editing;$('route-count').textContent=routes.length;$('routes-empty').hidden=!!routes.length;
+  for(const id of ['route-next','route-save','route-cancel','route-cancel-info','route-undo-choice','create-route','all-holds','show-selection','route-edit-info'])$(id).disabled=busyMutation;
+  if(viewed.length){
+    $('route-preview-title').textContent=viewed.length===1?viewed[0].name:viewed.length+' voies affichées';
+    $('route-preview-meta').textContent=viewed.length===1?(viewed[0].grade?viewed[0].grade+' · ':'')+'Par '+viewed[0].author:'Les cercles des voies cochées apparaissent ensemble sur la photo.';
+    $('route-preview-comment').textContent=viewed.length===1?viewed[0].comment||'':'';$('route-preview-comment').hidden=!$('route-preview-comment').textContent;
+    const actions=$('route-preview-actions');actions.replaceChildren();viewed.forEach((r,index)=>{const item=document.createElement('div');item.className='route-preview-actions-item';const label=document.createElement('strong');label.textContent=(viewed.length>1?(index+1)+'. ':'')+routeTitle(r);const button=document.createElement('button');button.type='button';button.textContent='Modifier les cercles · '+routeTitle(r);button.disabled=busyMutation;button.onclick=()=>beginRoute(r.id,'paint');item.append(label,document.createElement('br'),button);actions.append(item)});$('concentric-help').hidden=viewed.length<2;
+  }
+  const list=$('route-list');list.replaceChildren();for(const route of routes){
+    const card=document.createElement('article');card.className='route-card'+(routeViewIds.has(route.id)?' active':'');const title=document.createElement('h3');title.textContent=routeTitle(route);
+    const label=document.createElement('label');label.className='route-choice';const check=document.createElement('input');check.type='checkbox';check.checked=routeViewIds.has(route.id);check.disabled=busyMutation;check.setAttribute('aria-label','Afficher la voie '+routeTitle(route));check.onchange=()=>toggleRoute(route.id,check.checked);const name=document.createElement('span');name.textContent='Afficher cette voie';label.append(check,name);
+    const meta=document.createElement('p');meta.className='muted';meta.textContent=(route.grade?route.grade+' · ':'')+'Par '+route.author+' · '+route.holds.length+' cercle'+(route.holds.length===1?'':'s');
+    const roles=document.createElement('p');roles.className='muted small';roles.textContent=route.holds.filter(e=>e.role==='start').length+' départ(s) · '+route.holds.filter(e=>e.role==='finish').length+' arrivée(s)';
+    const buttons=document.createElement('div');buttons.className='row';for(const [text,action]of [['Voir seule',()=>viewRoute(route.id)],['Modifier les cercles',()=>beginRoute(route.id,'paint')],['Informations',()=>beginRoute(route.id,'info')],['Supprimer',()=>deleteRoute(route.id)]]){const b=document.createElement('button');b.type='button';b.textContent=text;b.setAttribute('aria-label',text+' · '+routeTitle(route));b.disabled=busyMutation;if(text==='Supprimer')b.className='danger';b.onclick=action;buttons.append(b)}card.append(title,label,meta,roles,buttons);list.append(card);
   }
   renderRouteSelection();syncUndo();
 }
-function beginRoute(id=null){
-  if(busyMutation)return;const wall=currentWall();if(!wall)return;if(!wall.holds?.length){message('Marquez d’abord les prises du mur avec le mode Ajouter.');return}
-  const original=id?wall.routes?.find(r=>r.id===id):null;if(id&&!original)return;
+function beginRoute(id=null,phase='info'){
+  if(busyMutation)return;const wall=currentWall();if(!wall)return;const original=id?wall.routes?.find(r=>r.id===id):null;if(id&&!original)return;
   const fields={name:original?.name||'',author:original?.author||author,grade:original?.grade||'',comment:original?.comment||''};
-  routeDraft={id:original?.id||crypto.randomUUID(),wallId:wall.id,before:original?clone(original):null,holds:clone(original?.holds||[]),initialFields:clone(fields)};
+  routeDraft={id:original?.id||crypto.randomUUID(),wallId:wall.id,before:original?clone(original):null,holds:clone(original?.holds||[]),workingHolds:clone(wall.holds||[]),initialFields:clone(fields),returnViews:[...routeViewIds]};
   for(const [key,value]of Object.entries(fields))$('route-'+key).value=value;
-  routeViewId=null;routeTool='normal';routeChoiceHistory=[];selectedHoldId=null;$('route-error').textContent='';setMode('explore');renderRoutes();renderHolds();$('route-editor').scrollIntoView({block:'start',behavior:'smooth'});$('route-name').focus({preventScroll:true});
+  draftPhase=original?phase:'info';routeChoiceHistory=[];routePaint='start';routeEndpointType='hand';routeOperation='paint';routeViewId=null;selectedHoldId=null;cancelGesture();
+  $('route-error').textContent=$('route-info-error').textContent='';$('route-editor-title').textContent=original?'Modifier les informations':'Créer une voie';renderRoutes();resetZoom();
+  (draftPhase==='paint'?$('route-tools'):$('route-editor')).scrollIntoView({block:'start',behavior:'auto'});if(draftPhase==='info')$('route-name').focus({preventScroll:true});
 }
-function chooseRouteHold(id){
-  if(!routeDraft||busyMutation)return;if(!currentWall()?.holds?.some(h=>h.id===id))return;
-  const index=routeDraft.holds.findIndex(e=>e.holdId===id);if(routeTool==='remove'&&index===-1)return;
-  routeChoiceHistory.push(clone(routeDraft.holds));
-  if(index>=0&&(routeTool==='remove'||routeDraft.holds[index].role===routeTool))routeDraft.holds.splice(index,1);
-  else if(index>=0)routeDraft.holds[index].role=routeTool;
-  else routeDraft.holds.push({holdId:id,role:routeTool});
-  $('route-error').textContent='';renderRouteSelection();renderHolds();
-}
+function toggleRoute(id,checked){if(busyMutation||routeDraft)return;if(checked)routeViewIds.add(id);else routeViewIds.delete(id);selectedHoldId=null;renderRoutes();renderHolds()}
+function viewRoute(id){if(busyMutation||routeDraft)return;routeViewIds=new Set([id]);selectedHoldId=null;renderRoutes();resetZoom();$('route-preview').scrollIntoView({block:'start',behavior:'auto'})}
 async function discardRoute(){
-  if(busyMutation)return false;if(routeIsDirty()&&!await confirmAction('Abandonner les modifications ?','Les choix et les informations non enregistrés pour cette voie seront perdus. La voie enregistrée reste conservée.'))return false;
-  routeDraft=null;routeChoiceHistory=[];renderRoutes();renderHolds();return true;
+  if(busyMutation)return false;if(routeIsDirty()&&!await confirmAction('Abandonner les modifications ?','Les informations et les cercles non enregistrés seront abandonnés. Les voies enregistrées restent conservées.'))return false;
+  routeViewIds=new Set(routeDraft?.returnViews||[]);routeDraft=null;routeChoiceHistory=[];selectedHoldId=null;renderRoutes();renderHolds();return true;
 }
-function viewRoute(id){if(busyMutation||routeDraft)return;routeViewId=id;selectedHoldId=null;setMode('explore');renderRoutes();renderHolds();$('route-preview').scrollIntoView({block:'start',behavior:'smooth'})}
-async function deleteRoute(id){
-  if(busyMutation||routeDraft)return;const wallId=selectedId,route=currentWall()?.routes?.find(r=>r.id===id);if(!route)return;
-  if(!await confirmAction('Supprimer cette voie ?','« '+route.name+' » sera supprimée. Les prises et la photo du mur restent conservées. Vous pourrez annuler la dernière action.'))return;
-  if(await saveRouteChange('delete',route,route,true,wallId))message('Voie supprimée. Vous pouvez annuler la dernière action.');
-}
-$('create-route').onclick=()=>beginRoute();$('edit-viewed-route').onclick=()=>beginRoute(routeViewId);
-$('all-holds').onclick=()=>{if(busyMutation)return;routeViewId=null;setMode('explore');renderRoutes();renderHolds()};
-for(const tool of ['normal','start','finish','remove'])$('route-tool-'+tool).onclick=()=>{if(busyMutation)return;routeTool=tool;renderRouteSelection()};
-$('route-undo-choice').onclick=()=>{if(busyMutation||!routeDraft||!routeChoiceHistory.length)return;routeDraft.holds=routeChoiceHistory.pop();renderRouteSelection();renderHolds()};
-$('route-cancel').onclick=discardRoute;
+async function deleteRoute(id){if(busyMutation||routeDraft)return;const wallId=selectedId,route=currentWall()?.routes?.find(r=>r.id===id);if(!route)return;if(!await confirmAction('Supprimer cette voie ?','« '+route.name+' » sera supprimée. Les autres voies et leurs cercles restent conservés. Vous pourrez annuler la dernière action.'))return;if(await saveRouteChange('delete',route,route,true,wallId))message('Voie supprimée. Vous pouvez annuler la dernière action.')}
+$('create-route').onclick=()=>beginRoute();$('all-holds').onclick=()=>{if(busyMutation)return;routeViewIds.clear();selectedHoldId=null;renderRoutes();renderHolds()};$('show-selection').onclick=()=>$('route-preview').scrollIntoView({block:'start',behavior:'auto'});
+$('route-next').onclick=()=>{if(!routeDraft||busyMutation)return;try{validateRouteFields(routeForm())}catch(error){$('route-info-error').textContent=humanError(error);return}draftPhase='paint';$('route-info-error').textContent='';renderRoutes();renderHolds();$('route-tools').scrollIntoView({block:'start',behavior:'auto'})};
+$('route-edit-info').onclick=()=>{if(busyMutation)return;cancelGesture();draftPhase='info';renderRoutes();renderHolds();$('route-editor').scrollIntoView({block:'start',behavior:'auto'})};
+for(const choice of ['start','finish','hand','foot'])$('paint-'+choice).onclick=()=>{if(busyMutation)return;cancelGesture();routePaint=choice;routeOperation='paint';renderRouteSelection();renderHolds()};
+for(const op of ['paint','move','remove','explore'])$('op-'+op).onclick=()=>{if(busyMutation)return;cancelGesture();routeOperation=op;renderRouteSelection();renderHolds()};
+for(const type of ['hand','foot'])$('endpoint-'+type).onclick=()=>{routeEndpointType=type;renderRouteSelection()};
+$('route-undo-choice').onclick=()=>{if(!routeDraft||busyMutation||!routeChoiceHistory.length)return;cancelGesture();const snapshot=routeChoiceHistory.pop();routeDraft.holds=snapshot.holds;routeDraft.workingHolds=snapshot.workingHolds;selectedHoldId=snapshot.selectedHoldId;renderRouteSelection();renderHolds()};
+$('route-cancel').onclick=$('route-cancel-info').onclick=discardRoute;
 $('route-save').onclick=async()=>{
-  if(busyMutation||!routeDraft)return;const draft=routeDraft,now=Date.now();
-  const route={id:draft.id,...routeForm(),holds:clone(draft.holds),createdAt:draft.before?.createdAt||now,updatedAt:now,revision:crypto.randomUUID()};
-  try{validateRoute(route,currentWall())}catch(error){$('route-error').textContent=humanError(error);return}
-  if(await saveRouteChange(draft.before?'update':'add',route,draft.before,true,draft.wallId)){routeDraft=null;routeChoiceHistory=[];routeViewId=route.id;renderRoutes();renderHolds();message('Voie enregistrée sur cet appareil.');$('route-preview').scrollIntoView({block:'start',behavior:'smooth'})}
+  if(!routeDraft||busyMutation)return;const draft=routeDraft,now=Date.now(),route={id:draft.id,...routeForm(),holds:clone(draft.holds),createdAt:draft.before?.createdAt||now,updatedAt:now,revision:crypto.randomUUID()};
+  try{validateRoute(route,{...currentWall(),holds:draft.workingHolds})}catch(error){$('route-error').textContent=humanError(error);return}
+  const ids=new Set(route.holds.map(e=>e.holdId)),bundle=draft.workingHolds.filter(h=>ids.has(h.id));
+  if(await saveRouteChange(draft.before?'update':'add',route,draft.before,true,draft.wallId,bundle)){routeDraft=null;routeChoiceHistory=[];selectedHoldId=null;routeViewIds=new Set([route.id]);renderRoutes();renderHolds();message('Voie et cercles enregistrés sur cet appareil.');$('route-preview').scrollIntoView({block:'start',behavior:'auto'})}
 };
 $('back').onclick=async()=>{if(busyMutation)return;if(routeDraft&&!await discardRoute())return;showHome()};
 window.addEventListener('beforeunload',event=>{if(routeIsDirty()||busyMutation){event.preventDefault();event.returnValue=''}});
+
 (async()=>{try{if(!window.isSecureContext||!crypto.randomUUID)throw new Error('Pour utiliser le carnet, ouvrez son adresse HTTPS. Un fichier ouvert directement ne suffit pas. Consultez le guide fourni.');db=await openDB();const settings=await readAll('settings');author=settings.find(s=>s.key==='author')?.value||'';await refresh();await storageStatus();if(!author)$('author-dialog').showModal();else await storageStatus(true);setupOffline()}catch(err){$('fatal').textContent=humanError(err);$('fatal').hidden=false;$('offline-status').textContent='Le carnet n’est pas disponible.';$('add-wall').disabled=$('add-first').disabled=$('settings-open').disabled=true}})();
 </script>
 </body>
