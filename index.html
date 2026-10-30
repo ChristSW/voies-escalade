@@ -14,7 +14,7 @@
 <style>
 .route-choice{display:flex;align-items:center;gap:12px;margin:0 0 10px;font-size:16px;cursor:pointer;min-height:48px}.route-choice input{width:24px;height:24px;accent-color:var(--ink);flex:none}.route-card.active{border:2px solid var(--ink);background:#f2f6e9}.route-card .row button{font-size:14px;padding:8px 12px}.route-editor .row{margin-top:20px}.route-tools button[aria-pressed=true]{background:#e4efcc;border:2px solid var(--ink)}.route-tools #route-edit-info{margin-top:10px;min-height:40px;background:transparent}.route-tools #paint-title{margin-bottom:8px}.route-preview-actions-item{padding:8px 0;border-bottom:1px solid var(--line);width:100%;overflow-wrap:anywhere}.route-preview-actions-item button{margin-top:6px}.multi-ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border:3px solid;border-radius:50%;background:transparent;box-shadow:0 0 0 1px #142a2460;pointer-events:none}.hold-marker.selected .multi-ring:last-child{outline:2px solid white;outline-offset:4px}.route-actions{margin-top:24px}.routes-section{margin-bottom:24px}.route-tools .row{gap:5px}.route-tools .row button{font-size:13px;padding:8px 10px}.route-tools #paint-help{margin:8px 0}.route-tools .route-tool-buttons{grid-template-columns:repeat(4,minmax(0,1fr))}.route-tools .route-tool-buttons button{padding:8px 3px;font-size:13px}.route-tools .legend-mark{width:16px;height:16px;margin-right:3px}.circle-note{font-size:13px;color:var(--muted);margin:8px 0}.hold-marker{z-index:1}@media(max-width:600px){.route-tools{padding:10px}.route-tools .row>button{flex:1}.route-preview h2{font-size:22px}}
 </style>
-<style>#exchange-summary{white-space:pre-line;overflow-wrap:anywhere}#exchange-tools summary{cursor:pointer;font-weight:700;min-height:48px}#backup-reminder{margin:16px 0}</style></head>
+<style>#exchange-summary{white-space:pre-line;overflow-wrap:anywhere}#exchange-tools summary{cursor:pointer;font-weight:700;min-height:48px}#backup-reminder{margin:16px 0}</style><style>.route-title{margin-bottom:8px}.route-title h3{min-width:0;margin:0}.route-order{display:flex;gap:6px;flex-shrink:0}.route-order button{min-width:48px;min-height:48px;padding:6px;font-size:22px}</style></head>
 <body>
 <header><div class="header-inner"><div class="brand"><svg viewBox="0 0 48 48" fill="none" aria-hidden="true"><rect width="48" height="48" rx="13" fill="#183f35"/><path d="m8 35 12-22 7 12 5-8 9 18" stroke="#d5ee87" stroke-width="3" stroke-linejoin="round"/><circle cx="33" cy="11" r="3" fill="#d5ee87"/></svg><div>VOIES<small>CARNET D’ESCALADE</small></div></div><div class="nav"><span id="network" class="tag"><i class="dot"></i><span>En ligne</span></span><button id="settings-open" type="button">Réglages</button></div></div></header>
 <main>
@@ -47,13 +47,13 @@
 </main>
 <dialog id="author-dialog" aria-labelledby="author-title"><form id="author-form"><h2 id="author-title">Bienvenue dans votre carnet</h2><p class="muted">Quel prénom ou pseudo voulez-vous utiliser pour signer vos futures voies ?</p><label for="author-first">Votre prénom ou pseudo</label><input id="author-first" type="text" maxlength="60" required autocomplete="nickname"><p class="small muted">Ce nom reste sur cet appareil. Vous pourrez le modifier dans les réglages.</p><p id="author-error" class="error" role="alert"></p><div class="dialog-actions"><button class="primary" type="submit">Commencer</button></div></form></dialog>
 <dialog id="wall-dialog" aria-labelledby="new-title"><form id="wall-form"><h2 id="new-title">Un nouveau mur</h2><label for="wall-name">Nom du mur</label><input id="wall-name" type="text" maxlength="80" placeholder="Ex. Le dévers de la salle" required><label>Photo du mur</label><div class="photo-choice"><button type="button" id="choose-gallery">▧ Choisir une photo</button><button type="button" id="choose-camera">◎ Prendre une photo</button></div><input id="gallery" type="file" accept="image/*" hidden><input id="camera" type="file" accept="image/*" capture="environment" hidden><img id="preview" class="photo-preview" alt="Aperçu de la photo choisie" hidden><p id="selected-info" class="small muted">La photo sera réduite à 1 600 pixels maximum et enregistrée sur cet appareil.</p><p id="wall-error" class="error" role="alert"></p><div class="dialog-actions"><button type="button" id="cancel-wall">Annuler</button><button type="submit" class="primary" id="save-wall">Créer le mur</button></div></form></dialog>
-<dialog id="settings-dialog" aria-labelledby="settings-title"><form id="settings-form"><h2 id="settings-title">Réglages</h2><label for="author-name">Votre prénom ou pseudo</label><input id="author-name" type="text" required maxlength="60" autocomplete="nickname"><div class="settings-block"><strong>Stockage sur cet appareil</strong><p id="storage-state" class="small"></p><p id="storage-size" class="small muted"></p><button type="button" id="persist">Demander la conservation des données</button><p class="small muted">Même avec cette protection, effacer les données du navigateur supprime votre carnet. Exportez régulièrement chaque mur pour conserver une sauvegarde.</p></div><div class="settings-block"><strong>Voies · version 0.5.2</strong><p class="small muted">Partage des murs et des voies par fichiers. Chaque téléphone possède ses propres données ; elles ne sont pas partagées automatiquement.</p></div><p id="settings-error" class="error" role="alert"></p><div class="dialog-actions"><button type="button" id="settings-close">Fermer</button><button class="primary" type="submit">Enregistrer</button></div></form></dialog>
+<dialog id="settings-dialog" aria-labelledby="settings-title"><form id="settings-form"><h2 id="settings-title">Réglages</h2><label for="author-name">Votre prénom ou pseudo</label><input id="author-name" type="text" required maxlength="60" autocomplete="nickname"><div class="settings-block"><strong>Stockage sur cet appareil</strong><p id="storage-state" class="small"></p><p id="storage-size" class="small muted"></p><button type="button" id="persist">Demander la conservation des données</button><p class="small muted">Même avec cette protection, effacer les données du navigateur supprime votre carnet. Exportez régulièrement chaque mur pour conserver une sauvegarde.</p></div><div class="settings-block"><strong>Voies · version 0.5.3</strong><p class="small muted">Partage des murs et des voies par fichiers. Chaque téléphone possède ses propres données ; elles ne sont pas partagées automatiquement.</p></div><p id="settings-error" class="error" role="alert"></p><div class="dialog-actions"><button type="button" id="settings-close">Fermer</button><button class="primary" type="submit">Enregistrer</button></div></form></dialog>
 <dialog id="confirm-dialog" aria-labelledby="confirm-title"><h2 id="confirm-title"></h2><p id="confirm-text"></p><div class="dialog-actions"><button id="confirm-no">Annuler</button><button id="confirm-yes" class="primary">Confirmer</button></div></dialog>
 <dialog id="rename-dialog" aria-labelledby="rename-title"><form id="rename-form"><h2 id="rename-title">Renommer le mur</h2><label for="rename-name">Nom du mur</label><input type="text" id="rename-name" maxlength="80" required><p id="rename-error" class="error" role="alert"></p><div class="dialog-actions"><button type="button" id="rename-close">Annuler</button><button class="primary">Enregistrer</button></div></form></dialog>
 <input id="import-file" type="file" accept=".txt,.json,text/plain,application/json" hidden><dialog id="exchange-dialog" aria-labelledby="exchange-title"><h2 id="exchange-title">Échange de fichiers</h2><p id="exchange-summary"></p><p id="exchange-error" class="error" role="alert"></p><div class="dialog-actions"><button id="exchange-close">Fermer</button><button id="exchange-share" hidden>Partager le fichier</button><button id="exchange-confirm" class="primary" hidden>Confirmer l’import</button></div></dialog><div class="toast" id="toast" role="status" hidden></div>
 <script>
 'use strict';
-const $=id=>document.getElementById(id), VERSION='0.5.2', DB_NAME='voies-escalade';
+const $=id=>document.getElementById(id), VERSION='0.5.3', DB_NAME='voies-escalade';
 let db, walls=[], author='', selectedId=null, undoAction=null, urls=[], draft=null, previewURL=null, photoToken=0, toastTimer, busyPhoto=false, busyMutation=false;
 function message(text){$('toast').textContent=text;$('toast').hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>$('toast').hidden=true,6000)}
 function humanError(e){if(e?.name==='QuotaExceededError')return 'Il manque de la place sur cet appareil. Libérez de l’espace puis réessayez. L’enregistrement n’a pas été effectué.';return e?.message||'L’opération a échoué. Réessayez.'}
@@ -236,6 +236,38 @@ function moveDraftCircle(id,position){
   if((currentWall().holds||[]).some(h=>h.id===id)){updated={...hold,...position,id:crypto.randomUUID(),managedByRoutes:true};routeDraft.workingHolds.push(updated);entry.holdId=updated.id}
   else{Object.assign(hold,position);updated=hold}selectedHoldId=updated.id;cleanupDraft();renderRouteSelection();renderHolds();
 }
+// Reorder the latest stored list in one transaction; keep every route's data intact.
+function changeRouteOrder(wallId,routeId,direction){
+  if(direction!==-1&&direction!==1)return Promise.reject(new Error('Le déplacement de la voie est incorrect.'));
+  return new Promise((resolve,reject)=>{
+    const tx=db.transaction('walls','readwrite'),store=tx.objectStore('walls');let reason,result;
+    tx.oncomplete=()=>resolve(result);tx.onerror=()=>reject(reason||tx.error);tx.onabort=()=>reject(reason||tx.error||new Error('L’ordre des voies n’a pas pu être enregistré.'));
+    const request=store.get(wallId);
+    request.onsuccess=()=>{try{
+      const wall=request.result;if(!wall)throw new Error('Ce mur n’existe plus. Revenez à la liste des murs.');
+      const routes=[...(wall.routes||[])],index=routes.findIndex(route=>route.id===routeId);
+      if(index<0)throw new Error('Cette voie n’existe plus. Rechargez le mur.');
+      const target=index+direction,changed=target>=0&&target<routes.length;
+      if(changed){[routes[index],routes[target]]=[routes[target],routes[index]];store.put({...wall,routes})}
+      result={wall:changed?{...wall,routes}:wall,changed};
+    }catch(error){reason=error;tx.abort()}};
+  });
+}
+async function moveRoute(routeId,direction){
+  if(busyMutation||routeDraft)return;const wallId=selectedId;busyMutation=true;renderRoutes();renderHolds();
+  try{
+    const result=await changeRouteOrder(wallId,routeId,direction),index=walls.findIndex(wall=>wall.id===wallId);
+    if(index>=0)walls[index]=result.wall;
+    if(result.changed){undoAction=null;message('Ordre des voies enregistré.');}
+  }catch(error){message(humanError(error))}
+  finally{
+    busyMutation=false;renderRoutes();renderHolds();
+    const key=direction<0?'up':'down',other=direction<0?'down':'up';
+    const button=$('route-'+key+'-'+routeId),fallback=$('route-'+other+'-'+routeId);
+    if(button&&!button.disabled)button.focus({preventScroll:true});else if(fallback&&!fallback.disabled)fallback.focus({preventScroll:true});
+  }
+}
+
 function routeTitle(route,wall=currentWall()){return route.name+((wall?.routes||[]).filter(r=>r.name===route.name).length>1?', '+route.author:'')}
 function renderRouteSelection(){
   if(!routeDraft)return;const entries=routeDraft.holds,starts=entries.filter(e=>e.role==='start').length,finishes=entries.filter(e=>e.role==='finish').length;
@@ -261,12 +293,14 @@ function renderRoutes(){
     $('route-preview-comment').textContent=viewed.length===1?viewed[0].comment||'':'';$('route-preview-comment').hidden=!$('route-preview-comment').textContent;
     const actions=$('route-preview-actions');actions.replaceChildren();viewed.forEach((r,index)=>{const item=document.createElement('div');item.className='route-preview-actions-item';const label=document.createElement('strong');label.textContent=(viewed.length>1?(index+1)+'. ':'')+routeTitle(r);const button=document.createElement('button');button.type='button';button.textContent='Modifier les cercles · '+routeTitle(r);button.disabled=busyMutation;button.onclick=()=>beginRoute(r.id,'paint');item.append(label,document.createElement('br'),button);actions.append(item)});$('concentric-help').hidden=viewed.length<2;
   }
-  const list=$('route-list');list.replaceChildren();for(const route of routes){
+  const list=$('route-list');list.replaceChildren();for(const [routeIndex,route] of routes.entries()){
     const card=document.createElement('article');card.className='route-card'+(routeViewIds.has(route.id)?' active':'');const title=document.createElement('h3');title.textContent=routeTitle(route);
+    const heading=document.createElement('div');heading.className='route-title';const order=document.createElement('div');order.className='route-order';order.setAttribute('role','group');order.setAttribute('aria-label','Ordre de la voie '+routeTitle(route));
+    for(const [symbol,text,direction]of [['↑','Monter la voie',-1],['↓','Descendre la voie',1]]){const b=document.createElement('button');b.type='button';b.id='route-'+(direction<0?'up':'down')+'-'+route.id;b.textContent=symbol;b.setAttribute('aria-label',text+' · '+routeTitle(route));b.title=text;b.disabled=busyMutation||(direction<0?routeIndex===0:routeIndex===routes.length-1);b.onclick=()=>moveRoute(route.id,direction);order.append(b)}heading.append(title,order);
     const label=document.createElement('label');label.className='route-choice';const check=document.createElement('input');check.type='checkbox';check.checked=routeViewIds.has(route.id);check.disabled=busyMutation;check.setAttribute('aria-label','Afficher la voie '+routeTitle(route));check.onchange=()=>toggleRoute(route.id,check.checked);const name=document.createElement('span');name.textContent='Afficher cette voie';label.append(check,name);
     const meta=document.createElement('p');meta.className='muted';meta.textContent=(route.grade?route.grade+' · ':'')+'Par '+route.author+' · '+route.holds.length+' cercle'+(route.holds.length===1?'':'s');
     const roles=document.createElement('p');roles.className='muted small';roles.textContent=route.holds.filter(e=>e.role==='start').length+' départ(s) · '+route.holds.filter(e=>e.role==='finish').length+' arrivée(s)';
-    const buttons=document.createElement('div');buttons.className='row';for(const [text,action]of [['Voir seule',()=>viewRoute(route.id)],['Modifier les cercles',()=>beginRoute(route.id,'paint')],['Informations',()=>beginRoute(route.id,'info')],['Supprimer',()=>deleteRoute(route.id)]]){const b=document.createElement('button');b.type='button';b.textContent=text;b.setAttribute('aria-label',text+' · '+routeTitle(route));b.disabled=busyMutation;if(text==='Supprimer')b.className='danger';b.onclick=action;buttons.append(b)}card.append(title,label,meta,roles,buttons);list.append(card);
+    const buttons=document.createElement('div');buttons.className='row';for(const [text,action]of [['Modifier les cercles',()=>beginRoute(route.id,'paint')],['Informations',()=>beginRoute(route.id,'info')],['Supprimer',()=>deleteRoute(route.id)]]){const b=document.createElement('button');b.type='button';b.textContent=text;b.setAttribute('aria-label',text+' · '+routeTitle(route));b.disabled=busyMutation;if(text==='Supprimer')b.className='danger';b.onclick=action;buttons.append(b)}card.append(heading,label,meta,roles,buttons);list.append(card);
   }
   renderRouteSelection();syncUndo();
 }
@@ -280,7 +314,6 @@ function beginRoute(id=null,phase='info'){
   (draftPhase==='paint'?$('route-tools'):$('route-editor')).scrollIntoView({block:'start',behavior:'auto'});if(draftPhase==='info')$('route-name').focus({preventScroll:true});
 }
 function toggleRoute(id,checked){if(busyMutation||routeDraft)return;if(checked)routeViewIds.add(id);else routeViewIds.delete(id);selectedHoldId=null;renderRoutes();renderHolds()}
-function viewRoute(id){if(busyMutation||routeDraft)return;routeViewIds=new Set([id]);selectedHoldId=null;renderRoutes();resetZoom();$('route-preview').scrollIntoView({block:'start',behavior:'auto'})}
 async function discardRoute(){
   if(busyMutation)return false;if(routeIsDirty()&&!await confirmAction('Abandonner les modifications ?','Les informations et les cercles non enregistrés seront abandonnés. Les voies enregistrées restent conservées.'))return false;
   routeViewIds=new Set(routeDraft?.returnViews||[]);routeDraft=null;routeChoiceHistory=[];selectedHoldId=null;renderRoutes();renderHolds();return true;
